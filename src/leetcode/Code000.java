@@ -1,25 +1,35 @@
 package leetcode;
+/**
+ * 这个类用于已经不止一次刷过的算法题，写出题解粘贴到力扣中
+ */
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Code000 {
-    public static void main(String[] args) {
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        StringBuilder s = new StringBuilder();
+        backTrace(0, 0, n, s, ans);
+        return ans;
     }
 
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode pHead = new ListNode(-1);
-        pHead.next = head;
-        ListNode pre = pHead;
-        ListNode p1 = head;
-        ListNode p2 = head;
-        while (n > 0 && p1 != null) {
-            p1 = p1.next;
-            n--;
+    private void backTrace(int left, int right, int n, StringBuilder s, List<String> ans) {
+        //已经添加了足够数量的括号
+        if (s.length() == n * 2) {
+            ans.add(new String(s));
         }
-        while (p1 != null) {
-            p1 = p1.next;
-            pre = p2;
-            p2 = p2.next;
+        //可以添加一个左括号
+        if (left < n) {
+            s.append("(");
+            backTrace(left + 1, right, n, s, ans);
+            s.deleteCharAt(s.length() - 1);
         }
-        pre.next = p2.next;
-        return pHead.next;
+        //可以添加一个右括号
+        if (right < left) {
+            s.append(")");
+            backTrace(left, right + 1, n, s, ans);
+            s.deleteCharAt(s.length() - 1);
+        }
     }
 }
