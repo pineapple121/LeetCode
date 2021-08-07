@@ -1,40 +1,44 @@
 package leetcode;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 无重复字符的最长子串
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
- *
+ * <p>
  * 思路：利用动态规划，dp[i][j]表示子字符串i,j中无重复字符的最长子串长度
- *使用动态规划提示超出内存限制，因此只能使用滑动窗口的方法
- *
+ * 使用动态规划提示超出内存限制，因此只能使用滑动窗口的方法
  */
 public class Code003 {
     public static void main(String[] args) {
         System.out.println(lengthOfLongestSubstring("pwwkew"));
     }
-    //滑动窗口
-    public static int lengthOfLongestSubstring(String s){
-        int len=s.length();
-        if(len==0)
-            return 0;
-        int ans=1;
-        HashSet<Character> set = new HashSet<>();
-        set.add(s.charAt(0));
-        int right=1;
-        for(int i=0;i<len;i++){
-            if(i!=0){
-                set.remove(s.charAt(i-1));
 
+    //滑动窗口
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null) {
+            return -1;
+        }
+        int sLen = s.length();
+        if (sLen == 0 || sLen == 1) {
+            return sLen;
+        }
+        Set<Character> set = new HashSet<>();
+        int right = 1;
+        int maxLength = 1;
+        set.add(s.charAt(0));
+        for (int left = 0; left < s.length(); left++) {
+            if (left != 0) {
+                set.remove(s.charAt(left - 1));
             }
-            while(right<len && !set.contains(s.charAt(right))){
+            while (right < sLen && !set.contains(s.charAt(right))) {
                 set.add(s.charAt(right));
                 right++;
             }
-            ans=Math.max(ans,right-i);
+            maxLength = Math.max(maxLength, right - left);
         }
-        return ans;
+        return maxLength;
     }
 
 
