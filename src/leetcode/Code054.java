@@ -9,31 +9,37 @@ import java.util.List;
  */
 public class Code054 {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> ans =new ArrayList<>();
-        int rows=matrix.length;
-        int columns=matrix[0].length;
-        int top=0,bottom=rows-1,left=0,right=columns-1;
-        while(top<=bottom && left<=right){
-            for(int j=left;j<=right;j++){
+        List<Integer> ans = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return ans;
+        }
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int top = 0, bottom = rows - 1, left = 0, right = columns - 1;
+        while (top <= bottom && left <= right) {
+            //从左往右
+            for (int j = left; j <= right; j++) {
                 ans.add(matrix[top][j]);
             }
-            for(int i=top+1;i<=bottom;i++){
+            //从上往下
+            for (int i = top + 1; i <= bottom; i++) {
                 ans.add(matrix[i][right]);
             }
-            if(left<right && top<bottom){
-                for(int j=right-1;j>=left;j--){
+            //如果已经遍历完数组则不需要再从右往左和从下往上
+            if (left < right && top < bottom) {
+                //从右向左
+                for (int j = right - 1; j >= left; j--) {
                     ans.add(matrix[bottom][j]);
                 }
-                for(int i=bottom-1;i>top;i--){
+                //从下向上
+                for (int i = bottom - 1; i > top; i--) {
                     ans.add(matrix[i][left]);
                 }
             }
-
             top++;
             bottom--;
             left++;
             right--;
-
         }
         return ans;
     }

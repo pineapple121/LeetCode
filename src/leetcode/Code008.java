@@ -21,51 +21,55 @@ package leetcode;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Code008 {
-    public static void main(String[] args) {
-        Solution08 s8 = new Solution08();
-        System.out.println(s8.myAtoi("4193 with words"));
-    }
-}
-
-class Solution08 {
     public int myAtoi(String s) {
         s = s.trim();
-        if (s.length() == 0)
+        int len = s.length();
+        if (len == 0) {
             return 0;
-        int ret = 0;
-        //i用于迭代字符串
+        }
+        //读到的绝对值
+        int ans = 0;
+        //进位
+        int carry = 0;
+        //迭代
         int i = 0;
-        //flag用于标记正负
+        //1代表正数，-1代表负数
         int flag = 1;
-        if (s.charAt(0) == '-') {
+        if (s.charAt(i) == '-') {
             flag = -1;
             i++;
-        }
-        if(s.charAt(0)=='+')
+        } else if (s.charAt(i) == '+') {
             i++;
-        while (i < s.length()) {
-            int p = 0;
-            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-                p = s.charAt(i) - '0';
-            }
-            else if(ret!=0)
-                return ret*flag;
-            else
-                return 0;
-            i++;
-            //判断是否会溢出
-            //在java中int类型的最大值和最小值分别为2147483647和-2147483648，所以末位大于7或者小于-8有可能溢出
-            if (flag == 1) {
-                if (ret>Integer.MAX_VALUE/10 || (ret==Integer.MAX_VALUE/10 && p>7))
-                    return Integer.MAX_VALUE;
-            }
-
-            if (flag == -1) {
-                if(-ret<Integer.MIN_VALUE/10 ||(-ret==Integer.MIN_VALUE/10 && p>8))
-                    return Integer.MIN_VALUE;
-            }
-            ret=ret*10+p;
         }
-        return ret * flag;
+        //最大正数和最小负数的末位值，判断是否溢出时用到
+        int lastMax = Integer.MAX_VALUE % 10;
+        int lastMin = -(Integer.MIN_VALUE % 10);
+        while (i < len) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                int value = c - '0';
+                /**
+                 * 判断是否溢出，正数和负数的溢出值不一样
+                 */
+                //正数是否溢出
+                if (flag == 1) {
+                    if (ans > Integer.MAX_VALUE / 10 || (ans == Integer.MAX_VALUE / 10 && value > lastMax)) {
+                        return Integer.MAX_VALUE;
+                    }
+                } else {
+                    if (-ans < Integer.MIN_VALUE / 10 || (-ans == Integer.MIN_VALUE / 10 && value > lastMin)) {
+                        return Integer.MIN_VALUE;
+                    }
+                }
+                //没有溢出
+                ans = ans * 10 + value;
+            }
+            //不是数字
+            else {
+                return ans * flag;
+            }
+            i++;
+        }
+        return ans * flag;
     }
 }
