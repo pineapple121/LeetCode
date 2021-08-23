@@ -37,4 +37,27 @@ public class Code082 {
         pre.next = p;
         return pHead.next;
     }
+
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null)
+            return head;
+        ListNode pHead = new ListNode(0);
+        pHead.next = head;
+        ListNode pre = pHead;
+        ListNode p = head;
+        while (p != null && p.next != null) {
+            if (p.val == p.next.val) {
+                int value = p.val;
+                while (p != null && p.val == value) {
+                    p = p.next;
+                }
+            } else {
+                pre.next = p;
+                pre = p;
+                p = p.next;
+            }
+        }
+        pre.next = p;
+        return pHead.next;
+    }
 }

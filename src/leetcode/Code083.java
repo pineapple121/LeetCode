@@ -19,4 +19,20 @@ public class Code083 {
         }
         return head;
     }
+
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode p = head, next;
+        while (p != null) {
+            next = p.next;
+            while (next != null && next.val == p.val) {
+                next = next.next;
+            }
+            p.next = next;
+            p = next;
+        }
+        return head;
+    }
 }

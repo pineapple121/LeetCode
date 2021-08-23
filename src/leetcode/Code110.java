@@ -11,7 +11,7 @@ package leetcode;
 public class Code110 {
     //自底向上的遍历，类似于后续遍历，不同的是每个节点p只会调用一次height(p)，时间复杂度为O(n),比下一种方法更快
     public boolean isBalanced(TreeNode root) {
-        return height(root) >= 0;
+        return height(root) != -1;
     }
 
     public int height(TreeNode tree) {
@@ -19,14 +19,14 @@ public class Code110 {
             return 0;
         int leftHeight = height(tree.left);
         int rightHeight = height(tree.right);
-        if (leftHeight >= 0 && rightHeight >= 0 && Math.abs(leftHeight - rightHeight) <= 1) {
-            return Math.max(leftHeight, rightHeight) + 1;
-        } else {
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) {
             return -1;
+        } else {
+            return Math.max(leftHeight, rightHeight) + 1;
         }
     }
 
-    //自顶向下的递归，会存在一些节点p存在多次调用height(p)的情况，时间复杂度为O(n)
+    //自顶向下的递归，会存在一些节点p存在多次调用height(p)的情况，时间复杂度为O(n^2)
 //    public boolean isBalanced(TreeNode root) {
 //        if (root == null)
 //            return true;
