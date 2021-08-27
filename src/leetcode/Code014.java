@@ -6,40 +6,22 @@ package leetcode;
  * 如果不存在公共前缀，返回空字符串 ""。
  */
 public class Code014 {
-    public static void main(String[] args) {
-        String[] strs = new String[]{"cir", "car"};
-        System.out.println(longestCommonPrefix(strs));
-    }
-
-    public static String longestCommonPrefix(String[] strs) {
-        StringBuilder sb = new StringBuilder("");
-        char c = 0;
-        int index = 0;
-        int length = strs.length;
-        if (strs.length == 0)
+    public String longestCommonPrefix2(String[] strs) {
+        if (strs == null || strs[0].length() == 0) {
             return "";
-        if (length == 1)
-            return strs[0];
-        if (strs[0].length() == 0)
-            return "";
-        int minLength = Integer.MAX_VALUE;
-        for (int i = 0; i < strs.length; i++) {
-            minLength = Math.min(minLength, strs[i].length());
         }
-        while (index < minLength) {
-            for (int i = 1; i < length; i++) {
-                c = strs[0].charAt(index);
-                if (c == strs[i].charAt(index)) {
-                    if (i == length - 1) {
-                        sb.append(c);
-                        index++;
-                    }
-                } else {
-                    return sb.toString();
+        //字符串的数量
+        int count = strs.length;
+        //第一个字符串的长度
+        int len = strs[0].length();
+        for (int i = 0; i < len; i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < count; j++) {
+                if (i == strs[j].length() || strs[j].charAt(i) != c) {
+                    return strs[0].substring(0, i);
                 }
             }
         }
-
-        return sb.toString();
+        return strs[0];
     }
 }

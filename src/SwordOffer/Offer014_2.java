@@ -19,7 +19,7 @@ package SwordOffer;
  * 思路：
  * 考虑贪心算法，将绳子先尽可能分成长度为3的子段
  */
-public class Offer14_2 {
+public class Offer014_2 {
     public int cuttingRope(int n) {
         int mod = 1000000007;
         if (n < 4) {
