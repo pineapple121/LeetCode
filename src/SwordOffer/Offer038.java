@@ -8,7 +8,6 @@ package SwordOffer;
  **/
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -35,13 +34,14 @@ public class Offer038 {
         visited = new boolean[s.length()];
         StringBuilder sb = new StringBuilder();
         backtrace(s.toCharArray(), 0, sb);
-        String[] ans = new String[list.size()];
-        Iterator<String> it = list.iterator();
-        int index = 0;
-        while (it.hasNext()) {
-            ans[index++] = it.next();
-        }
-        return ans;
+//        String[] ans = new String[list.size()];
+//        Iterator<String> it = list.iterator();
+//        int index = 0;
+//        while (it.hasNext()) {
+//            ans[index++] = it.next();
+//        }
+//        return ans;
+        return list.toArray(new String[0]);
     }
 
     //i可以理解为第i个空位应当填入哪个字符
